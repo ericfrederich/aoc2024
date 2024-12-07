@@ -1,12 +1,7 @@
 export function similarityScore(left: number[], right: number[]): number {
-  let score = 0;
   const lookup: { [k: number]: number } = {};
-  for (const n of right) {
-    lookup[n] = (lookup[n] || 0) + 1;
-  }
-  for (const n of left) {
-    score += n * (lookup[n] || 0);
-  }
+  right.map((n) => {lookup[n] = (lookup[n] || 0) + 1;})
+  const score = left.reduce((acc, cur) => (acc + cur * (lookup[cur] || 0)), 0);
   return score;
 }
 
