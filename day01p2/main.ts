@@ -1,17 +1,11 @@
 export function similarityScore(left: number[], right: number[]): number {
   let score = 0;
-  const counter = new Map();
+  const lookup: { [k: number]: number } = {};
   for (const n of right) {
-    if (!counter.has(n)) {
-      counter.set(n, 0);
-    }
-    counter.set(n, counter.get(n) + 1);
+    lookup[n] = (lookup[n] || 0) + 1;
   }
   for (const n of left) {
-    if (!counter.has(n)) {
-      continue;
-    }
-    score += n * counter.get(n);
+    score += n * (lookup[n] || 0);
   }
   return score;
 }
