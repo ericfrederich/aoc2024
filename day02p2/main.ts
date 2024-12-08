@@ -1,8 +1,11 @@
-import { enumerate, pairwise } from "./itertools.ts";
+import { single } from "npm:itertools-ts";
+
+console.log(typeof single)
 
 function isSafe(report: number[]): [boolean, number] {
   let direction: number | null = null;
-  for (const [i, [a, b]] of enumerate(pairwise(report))) {
+
+  for (const [i, [a, b]] of single.enumerate(single.pairwise(report))) {
     const delta = a - b;
     if (delta === 0) {
       return [false, i];
@@ -40,7 +43,7 @@ export function numSafe(reports: number[][]): number {
       }
       for (const idx of tryWithouts) {
         const copy: number[] = [];
-        for (const [i, item] of enumerate(report)) {
+        for (const [i, item] of single.enumerate(report)) {
           if (i == idx) {
             continue;
           }
