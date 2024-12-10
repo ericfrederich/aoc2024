@@ -1,84 +1,54 @@
-function occurences(bigString: string, subString: string): number {
-  return (bigString.match(RegExp(subString, "g")) || []).length;
+function occurrences(bigString: string, subString: string): number {
+  return (bigString.match(new RegExp(subString, "g")) || []).length;
 }
 
 export function xmasSearch(data: string[]): number {
-  let ret = 0;
   const xmas = "XMAS";
   const height = data.length;
   const width = data[0].length;
-  // search forwards and backwards
-  for (const searchWord of [xmas, xmas.split("").reverse().join("")]) {
-    // horizontals
-    for (const line of data) {
-      const tmp = occurences(line, searchWord);
-      ret += tmp;
-    }
-    // verticals
-    for (let col = 0; col < width; col++) {
-      const vert = data.map((line) => line[col]).join("");
-      ret += occurences(vert, searchWord);
-    }
-    // diagonal (\)
-    // starting in col 0
-    for (let startRow = 0; startRow <= height - searchWord.length; startRow++) {
-      const chars: string[] = [];
-      for (let col = 0; col < width; col++) {
-        if (startRow + col >= height) {
-          break;
-        }
-        chars.push(data[startRow + col][col]);
-      }
-      const diag = chars.join("");
-      ret += occurences(diag, searchWord);
-    }
-    // starting in row 0
-    for (let startCol = 1; startCol <= width - searchWord.length; startCol++) {
-      const chars: string[] = [];
-      for (let row = 0; row < height; row++) {
-        if (startCol + row >= width) {
-          break;
-        }
-        chars.push(data[row][startCol + row]);
-      }
-      const diag = chars.join("");
-      ret += occurences(diag, searchWord);
-    }
+  let ret = 0;
 
-    // diagonal (/)
-    // starting in col 0
-    for (
-      let startRow = height - 1;
-      startRow >= searchWord.length - 1;
-      startRow--
-    ) {
-      const chars: string[] = [];
-      for (let col = 0; col < width; col++) {
-        if (startRow - col < 0) {
-          break;
+  const searchPatterns = [xmas, xmas.split("").reverse().join("")];
+
+  const searchInDirection = (getChars: (i: number, j: number) => string) => {
+    for (const searchWord of searchPatterns) {
+      for (let i = 0; i < height; i++) {
+        let chars = "";
+        for (let j = 0; j < width; j++) {
+          chars += getChars(i, j);
         }
-        chars.push(data[startRow - col][col]);
+        ret += occurrences(chars, searchWord);
       }
-      const diag = chars.join("");
-      ret += occurences(diag, searchWord);
     }
-    // starting in row (height - 1)
-    for (let startCol = 1; startCol <= width - searchWord.length; startCol++) {
-      const chars: string[] = [];
-      for (let row = height - 1; row >= 0; row--) {
-        if ((startCol + (height - row) - 1) >= width) {
-          break;
+  };
+
+  // Horizontal and vertical searches
+  searchInDirection((i, j) => data[i][j]); // Horizontal
+  searchInDirection((i, j) => data[j][i]); // Vertical
+
+  // Diagonal searches
+  const searchDiagonals = (startRow: number, startCol: number, rowInc: number, colInc: number) => {
+    for (let i = 0; i < height; i++) {
+      let chars = "";
+      for (let j = 0; j < width; j++) {
+        const row = startRow + i * rowInc;
+        const col = startCol + j * colInc;
+        if (row >= 0 && row < height && col >= 0 && col < width) {
+          chars += data[row][col];
         }
-        chars.push(data[row][startCol + (height - row) - 1]);
       }
-      const diag = chars.join("");
-      ret += occurences(diag, searchWord);
+      ret += occurrences(chars, xmas);
+      ret += occurrences(chars, xmas.split("").reverse().join(""));
     }
-  }
+  };
+
+  // Diagonal (\) and (/)
+  searchDiagonals(0, 0, 1, 1); // Diagonal (\) from top-left
+  searchDiagonals(height - 1, 0, -1, 1); // Diagonal (/) from bottom-left
+
   return ret;
 }
 
-// Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
   const bytes = await Deno.readFile("input.txt");
   const fileStr = new TextDecoder().decode(bytes).trimEnd();
