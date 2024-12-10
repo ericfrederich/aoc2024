@@ -35,6 +35,8 @@ export function xmasSearch(data: string[]): number {
         const col = startCol + j * colInc;
         if (row >= 0 && row < height && col >= 0 && col < width) {
           chars += data[row][col];
+        } else {
+          break;
         }
       }
       ret += occurrences(chars, xmas);
@@ -43,8 +45,14 @@ export function xmasSearch(data: string[]): number {
   };
 
   // Diagonal (\) and (/)
-  searchDiagonals(0, 0, 1, 1); // Diagonal (\) from top-left
-  searchDiagonals(height - 1, 0, -1, 1); // Diagonal (/) from bottom-left
+  for (let i = 0; i <= height - xmas.length; i++) {
+    searchDiagonals(i, 0, 1, 1); // Diagonal (\) from left side
+    searchDiagonals(i, 0, -1, 1); // Diagonal (/) from left side
+  }
+  for (let j = 1; j <= width - xmas.length; j++) {
+    searchDiagonals(0, j, 1, 1); // Diagonal (\) from top side
+    searchDiagonals(height - 1, j, -1, 1); // Diagonal (/) from bottom side
+  }
 
   return ret;
 }
