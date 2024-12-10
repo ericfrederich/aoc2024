@@ -3,7 +3,7 @@
 import sys
 from collections import Counter
 
-fname = sys.argv[1] if len(sys.argv[1:]) == 1 else "input.txt"
+fname = sys.argv[1] if len(sys.argv[1:]) == 1 else "blah.txt"
 
 data = open(fname).read().splitlines()
 height = len(data)

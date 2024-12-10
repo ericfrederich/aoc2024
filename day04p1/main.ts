@@ -10,11 +10,11 @@ export function xmasSearch(data: string[]): number {
 
   const searchPatterns = [xmas, xmas.split("").reverse().join("")];
 
-  const searchInDirection = (getChars: (i: number, j: number) => string, limit: number) => {
+  const searchInDirection = (getChars: (i: number, j: number) => string, limit: number, innerLimit: number) => {
     for (const searchWord of searchPatterns) {
       for (let i = 0; i < limit; i++) {
         let chars = "";
-        for (let j = 0; j < width; j++) {
+        for (let j = 0; j < innerLimit; j++) {
           chars += getChars(i, j);
         }
         ret += occurrences(chars, searchWord);
@@ -23,8 +23,8 @@ export function xmasSearch(data: string[]): number {
   };
 
   // Horizontal and vertical searches
-  searchInDirection((i, j) => data[i][j], height); // Horizontal
-  searchInDirection((i, j) => data[j][i], width); // Vertical
+  searchInDirection((i, j) => data[i][j], height, width); // Horizontal
+  searchInDirection((i, j) => data[j][i], width, height); // Vertical
 
   // Diagonal searches
   const searchDiagonals = (startRow: number, startCol: number, rowInc: number, colInc: number) => {
