@@ -1,6 +1,6 @@
 import { assertEquals } from "@std/assert";
-import { exampleData, guardGallivant } from "./main.ts";
+import { exampleData, guardGallivantPart2 } from "./main.ts";
 
 Deno.test(function addTest() {
-  assertEquals(guardGallivant(exampleData), 41);
+  assertEquals(guardGallivantPart2(exampleData), 6);
 });

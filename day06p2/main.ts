@@ -11,13 +11,18 @@ function getCoords(grid: string[][], char: "^"): Coords {
   throw Error("grid does not contain caret (^)");
 }
 
-export function guardGallivant(grid: string[][]): number {
+function guardGallivantLoops(grid: string[][]): boolean {
   const guardCoords = getCoords(grid, "^");
   let guardDir = "up" as Direction;
-  let visited = 1;
-  grid[guardCoords.row][guardCoords.col] = "X";
+  const history = new Set<string>();
 
   while (true) {
+    if (history.has(`${guardCoords.row},${guardCoords.col},${guardDir}`)) {
+      return true;
+    }
+    // log the history
+    history.add(`${guardCoords.row},${guardCoords.col},${guardDir}`);
+
     let [newRow, newCol] = [guardCoords.row, guardCoords.col];
     if (guardDir === "up") {
       newRow -= 1;
@@ -28,12 +33,12 @@ export function guardGallivant(grid: string[][]): number {
     } else if (guardDir === "right") {
       newCol += 1;
     }
-    // if we're out of bounds we're done
+    // if we're out of bounds we dont' loop
     if (
       newRow < 0 || newRow >= grid.length || newCol < 0 ||
       newCol >= grid[0].length
     ) {
-      break;
+      return false;
     }
     if (grid[newRow][newCol] === "#") {
       // stay in place, turn right
@@ -51,13 +56,28 @@ export function guardGallivant(grid: string[][]): number {
     // move
     guardCoords.row = newRow;
     guardCoords.col = newCol;
-    // if it hasn't been visited before; mark it and count it
-    if (grid[guardCoords.row][guardCoords.col] !== "X") {
-      grid[guardCoords.row][guardCoords.col] = "X";
-      visited += 1;
+  }
+}
+
+export function guardGallivantPart2(grid: string[][]): number {
+  let ret = 0;
+  for (const [i, row] of single.enumerate(grid)) {
+    console.log(`Working on row ${i + 1}/${grid.length}`);
+    for (const [j, val] of single.enumerate(row)) {
+      if (val !== ".") {
+        continue;
+      }
+      // set it
+      row[j] = "#";
+      // try it
+      if (guardGallivantLoops(grid)) {
+        ret += 1;
+      }
+      // unset it
+      row[j] = ".";
     }
   }
-  return visited;
+  return ret;
 }
 
 export const exampleData: string[][] = [
@@ -78,5 +98,5 @@ if (import.meta.main) {
   const bytes = await Deno.readFile("input.txt");
   const fileStr = new TextDecoder().decode(bytes).trimEnd();
   const grid = fileStr.split("\n").map((line) => Array.of(...line));
-  console.log(guardGallivant(grid));
+  console.log(guardGallivantPart2(grid));
 }
