@@ -10,7 +10,6 @@ export function mullItOver(memory: string): number {
 
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  const bytes = await Deno.readFile("input.txt");
-  const fileStr = new TextDecoder().decode(bytes);
-  console.log(mullItOver(fileStr));
+  const text = (await Deno.readTextFile("input.txt")).trimEnd();
+  console.log(mullItOver(text));
 }

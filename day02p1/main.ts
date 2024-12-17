@@ -43,12 +43,9 @@ export function numSafe(reports: number[][]): number {
 
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  const bytes = await Deno.readFile("input.txt");
-  const fileStr = new TextDecoder().decode(bytes);
-  const lines = fileStr.split("\n");
-  console.log(`Read in ${lines.length} lines`);
+  const text = (await Deno.readTextFile("input.txt")).trimEnd();
   const reports: number[][] = [];
-  for (let line of lines) {
+  for (let line of text.split("\n")) {
     line = line.trim();
     if (line.length == 0) {
       continue;

@@ -60,10 +60,9 @@ export const exampleInput = {
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
   // const { rules, pageSets } = exampleInput;
-  const bytes = await Deno.readFile("input.txt");
-  const fileStr = new TextDecoder().decode(bytes).trimEnd();
+  const text = (await Deno.readTextFile("input.txt")).trimEnd();
 
-  const sections = fileStr.split("\n\n");
+  const sections = text.split("\n\n");
   if (sections.length !== 2) {
     throw Error("Bad input file");
   }

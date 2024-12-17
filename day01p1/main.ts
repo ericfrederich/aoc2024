@@ -1,31 +1,34 @@
-const bytes = await Deno.readFile("input.txt");
-const fileStr = new TextDecoder().decode(bytes);
-console.log(`Read in ${fileStr.length} bytes`);
-const lines = fileStr.split("\n");
-console.log(`Read in ${lines.length} lines`);
-let runningDelta = 0;
-const left: number[] = [];
-const right: number[] = [];
+export function historianHysteria(lines: string[]): number {
+  let runningDelta = 0;
+  const left: number[] = [];
+  const right: number[] = [];
 
-for (let line of lines) {
-  line = line.trim();
-  if (line.length == 0) {
-    console.log("SKIPPING");
-    continue;
+  for (let line of lines) {
+    line = line.trim();
+    if (line.length == 0) {
+      console.log("SKIPPING");
+      continue;
+    }
+    const [a, b] = line.split(/\s+/).map(Number);
+    left.push(a);
+    right.push(b);
   }
-  const [a, b] = line.split(/\s+/).map(Number);
-  left.push(a);
-  right.push(b);
+
+  left.sort();
+  right.sort();
+
+  for (let i = 0; i < left.length; i++) {
+    const a = left[i];
+    const b = right[i];
+    const delta = Math.abs(a - b);
+    console.log(a, b, delta);
+    runningDelta += delta;
+  }
+  return runningDelta;
 }
 
-left.sort();
-right.sort();
-
-for (let i = 0; i < left.length; i++) {
-  const a = left[i];
-  const b = right[i];
-  const delta = Math.abs(a - b);
-  console.log(a, b, delta);
-  runningDelta += delta;
+// Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
+if (import.meta.main) {
+  const text = (await Deno.readTextFile("input.txt")).trimEnd();
+  console.log(historianHysteria(text.split("\n")));
 }
-console.log(`Solution: ${runningDelta}`);

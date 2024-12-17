@@ -47,8 +47,6 @@ export function xmasSearch(data: string[]): number {
 
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  const bytes = await Deno.readFile("input.txt");
-  const fileStr = new TextDecoder().decode(bytes).trimEnd();
-  const lines = fileStr.split("\n");
-  console.log(xmasSearch(lines));
+  const text = (await Deno.readTextFile("input.txt")).trimEnd();
+  console.log(xmasSearch(text.split("\n")));
 }

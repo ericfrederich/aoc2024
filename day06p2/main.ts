@@ -95,8 +95,7 @@ export const exampleData: string[][] = [
 
 // Learn more at https://docs.deno.com/runtime/manual/examples/module_metadata#concepts
 if (import.meta.main) {
-  const bytes = await Deno.readFile("input.txt");
-  const fileStr = new TextDecoder().decode(bytes).trimEnd();
-  const grid = fileStr.split("\n").map((line) => Array.of(...line));
+  const text = (await Deno.readTextFile("input.txt")).trimEnd();
+  const grid = text.split("\n").map((line) => Array.of(...line));
   console.log(guardGallivantPart2(grid));
 }
