@@ -10,9 +10,7 @@ page_sets = [tuple(map(int, line.split(","))) for line in page_sets_str.splitlin
 
 total = 0
 for page_set in page_sets:
-    valid_rules = [
-        rule for rule in rules if all(part in set(page_set) for part in rule)
-    ]
+    valid_rules = [rule for rule in rules if all(part in set(page_set) for part in rule)]
     print(len(valid_rules))
 
     befores = {page: set() for page in page_set}
