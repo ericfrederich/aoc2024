@@ -1,6 +1,6 @@
 import { single } from "npm:itertools-ts";
 
-console.log(typeof single)
+console.log(typeof single);
 
 function isSafe(report: number[]): [boolean, number] {
   let direction: number | null = null;

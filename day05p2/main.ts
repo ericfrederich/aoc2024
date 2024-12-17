@@ -33,9 +33,7 @@ export function printQueue(
   }
   let ret = 0;
   for (const pageList of pageLists) {
-    const validRules: [number, number][] = rules.filter((rule) =>
-      rule.every((page) => pageList.includes(page))
-    );
+    const validRules: [number, number][] = rules.filter((rule) => rule.every((page) => pageList.includes(page)));
     if (isGood(pageList, rules)) {
       continue;
     }
@@ -97,11 +95,7 @@ if (import.meta.main) {
     throw Error("Bad input file");
   }
   const [rulesStr, pageSetsStr] = sections;
-  const rules = rulesStr.split("\n").map((line) =>
-    line.split("|").map(Number)
-  ) as [number, number][];
-  const pageSets = pageSetsStr.split("\n").map((line) =>
-    line.split(",").map(Number)
-  );
+  const rules = rulesStr.split("\n").map((line) => line.split("|").map(Number)) as [number, number][];
+  const pageSets = pageSetsStr.split("\n").map((line) => line.split(",").map(Number));
   console.log(printQueue(rules, pageSets));
 }
