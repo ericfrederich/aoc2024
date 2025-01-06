@@ -19,7 +19,8 @@ const opFuncs: { [key: string]: (l: number, r: number) => number } = {
 
 export function bridgeRepair(equations: Equation[]): number {
   let ret = 0;
-  for (const { result, operands } of equations) {
+  for (const [i, { result, operands }] of single.enumerate(equations)) {
+    console.log(i, "/", equations.length);
     const operatorOptions = set.cartesianProduct(
       ...single.repeat("+*|", operands.length - 1),
     );
