@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io"
 	"log"
 	"os"
 )
@@ -18,23 +17,20 @@ func Perr[T any](value T, err error) T {
 }
 
 func readInputFile(filename string) ([]int, []int) {
-	f := Perr(os.Open(filename))
-	bf := bufio.NewReader(f)
-	left := []int{}
-	right := []int{}
-	for {
-		line, err := bf.ReadString('\n')
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			log.Fatal(err)
-		}
-		var a int
-		var b int
-		Perr(fmt.Sscanf(line, "%d %d", &a, &b))
+	file := Perr(os.Open(filename))
+	defer file.Close()
+
+	var left, right []int
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		var a, b int
+		fmt.Println(scanner.Text())
+		Perr(fmt.Sscanf(scanner.Text(), "%d %d", &a, &b))
 		left = append(left, a)
 		right = append(right, b)
+	}
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
 	}
 	return left, right
 }
