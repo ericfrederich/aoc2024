@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 import { set, single } from "npm:itertools-ts";
 type Equation = { result: number; operands: readonly number[] };
 

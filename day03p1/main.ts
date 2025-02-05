@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 export function mullItOver(memory: string): number {
   let total = 0;
   const matches = memory.matchAll(/mul\((\d+),(\d+)\)/g);

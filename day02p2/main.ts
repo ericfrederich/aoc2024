@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 import { single } from "npm:itertools-ts";
 
 console.log(typeof single);

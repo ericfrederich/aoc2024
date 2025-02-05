@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 export function xmasSearch(data: string[]): number {
   let ret = 0;
   const height = data.length;

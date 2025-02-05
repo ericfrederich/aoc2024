@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 // like Python's sorted
 function sorted<T, K>(array: T[], keyFunction: (item: T) => K): T[] {
   const keyArray = array.map((item) => ({ item, key: keyFunction(item) }));

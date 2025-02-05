@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 function occurences(bigString: string, subString: string): number {
   return (bigString.match(RegExp(subString, "g")) || []).length;
 }

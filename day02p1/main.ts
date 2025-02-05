@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 function* pairwise(data: number[]) {
   for (let i = 1; i < data.length; i++) {
     yield [data[i - 1], data[i]];

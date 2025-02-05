@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 export function printQueue(
   rules: [number, number][],
   pageLists: number[][],

@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 import { single } from "npm:itertools-ts";
 
 const enumerate = single.enumerate;

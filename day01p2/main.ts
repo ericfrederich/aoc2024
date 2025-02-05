@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 export function similarityScore(left: number[], right: number[]): number {
   const lookup: { [k: number]: number } = {};
   right.map((n) => {

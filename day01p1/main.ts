@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 export function historianHysteria(lines: string[]): number {
   let runningDelta = 0;
   const left: number[] = [];

@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 export function plutonianPebbles(stones: number[], blinks: number): number {
   function blink(stones: number[]) {
     for (let i = 0; i < stones.length; i++) {
