@@ -30,7 +30,7 @@ repos:
     rev: a30f0d816e5062a67d87c8de753cfe499672b959 # frozen: v1.5.5
     hooks:
       - id: remove-tabs
-        exclude: (Makefile$|\.bat$|\.cmake$|\.eps$|\.fits$|\.opt$)
+        exclude: (Makefile$|\.bat$|\.cmake$|\.eps$|\.fits$|\.opt$|\.go$)
 
   - repo: https://github.com/pycqa/isort
     rev: c235f5e450b4b84e58d114ed4c589cbf454175a3 # frozen: 5.13.2
