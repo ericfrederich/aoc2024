@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"slices"
 
-	"github.com/ericfrederich/aoc2024/day01/internal/utils"
+	"github.com/ericfrederich/aoc2024/common"
 )
 
 func Part1(left, right []int) (*int, error) {
@@ -17,7 +17,7 @@ func Part1(left, right []int) (*int, error) {
 
 	result := 0
 	for i := 0; i < len(left); i++ {
-		result += utils.AbsInt(left[i] - right[i])
+		result += common.AbsInt(left[i] - right[i])
 	}
 	return &result, nil
 }

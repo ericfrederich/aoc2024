@@ -6,13 +6,6 @@ import (
 	"os"
 )
 
-func AbsInt(x int) int {
-	if x < 0 {
-		return -x
-	}
-	return x
-}
-
 func ReadInputFile(filename string) ([]int, []int, error) {
 	left := make([]int, 0)
 	rigth := make([]int, 0)
