@@ -2,13 +2,22 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/ericfrederich/aoc2024/day01/internal/part1"
 	"github.com/ericfrederich/aoc2024/day01/internal/utils"
 )
 
 func main() {
-	left, right, err := utils.ReadInputFile("input.txt")
+	filename := "input.txt"
+	if len(os.Args) > 1 {
+		filename = os.Args[1]
+	}
+	left, right, err := utils.ReadInputFile(filename)
+	if err != nil {
+		fmt.Printf("Error reading input file: %v\n", err)
+		return
+	}
 	result, err := part1.Part1(left, right)
 	if err != nil {
 		fmt.Println("Error in Part1:", err)
