@@ -14,7 +14,7 @@ func AbsInt(x int) int {
 	return x
 }
 
-func ReadInts2dFromFile(filename string) ([][]int, error) {
+func ReadInts2d(filename string, enforceRowLengths bool) ([][]int, error) {
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open file %s: %w", filename, err)
@@ -46,12 +46,18 @@ func ReadInts2dFromFile(filename string) ([][]int, error) {
 	if len(matrix[0]) == 0 {
 		return nil, fmt.Errorf("no columns found in file %s", filename)
 	}
-	for _, row := range matrix {
-		if len(row) != len(matrix[0]) {
-			return nil, fmt.Errorf("inconsistent row lengths in file %s", filename)
+	if enforceRowLengths {
+		for _, row := range matrix {
+			if len(row) != len(matrix[0]) {
+				return nil, fmt.Errorf("inconsistent row lengths in file %s", filename)
+			}
 		}
 	}
 	return matrix, nil
+}
+
+func ReadInts2dFromFile(filename string) ([][]int, error) {
+	return ReadInts2d(filename, true)
 }
 
 func Columns(matrix [][]int) [][]int {
