@@ -2,9 +2,16 @@ package part1
 
 import (
 	"testing"
+
+	"github.com/ericfrederich/aoc2024/common"
 )
 
 func TestPart1(t *testing.T) {
+	data, err := common.ReadInts2d("../../input.txt", false)
+	if err != nil {
+		t.Error("Error reading input file:", err)
+	}
+
 	tests := []struct {
 		name string
 		data [][]int
@@ -21,6 +28,10 @@ func TestPart1(t *testing.T) {
 				{1, 3, 6, 7, 9},
 			},
 			want: 2,
+		}, {
+			name: "input",
+			data: data,
+			want: 369, // Replace with the expected result for the input data
 		},
 	}
 	for _, tt := range tests {
